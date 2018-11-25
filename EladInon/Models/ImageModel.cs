@@ -12,10 +12,10 @@ namespace ImageViewer.Models
     {
         public ImageModel()
         {
-            string directoryOfImage =  HttpContext.Current.Server.MapPath("~/Images/");
-            XDocument imageData = XDocument.Load(directoryOfImage + @"/ImageMetaData.xml");
-            var images = from image in imageData.Descendants("image") select new Image(image.Element("filename").Value, image.Element("description").Value);
-            this.AddRange(images.ToList<Image>());
+         //    string directoryOfImage =  HttpContext.Current.Server.MapPath("~/Images/");
+         //   XDocument imageData = XDocument.Load(directoryOfImage + @"/ImageMetaData.xml");
+         //   var images = from image in imageData.Descendants("image") select new Image(image.Element("filename").Value, image.Element("description").Value);
+         //   this.AddRange(images.ToList<Image>());
         }
     }
 }
