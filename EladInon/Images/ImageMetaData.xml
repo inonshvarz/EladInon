@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<images>
+  <image>
+    <filename>image_1.png</filename>
+    <description>תמונה ראשונה</description>
+  </image>
+  <image>
+    <filename>image_2.png</filename>
+    <description>תמונה שניה</description>
+  </image>
+  <image>
+    <filename>image_3.jpg</filename>
+    <description>תמונה שלישית</description>
+  </image>
+  <image>
+    <filename>image_4.jpg</filename>
+    <description>תמונה רביעית</description>
+  </image>
+</images>

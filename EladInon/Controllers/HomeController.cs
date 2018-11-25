@@ -14,17 +14,21 @@ namespace EladInon.Controllers
         {
             return View();
         }
+        public IActionResult ShowImages()
+        {
+            return View();
+        }
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "כאן צריך לכתוב אודות האתר שלנו";
 
             return View();
         }
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "פרטי יצירת קשר";
 
             return View();
         }
@@ -38,6 +42,16 @@ namespace EladInon.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+    public class ImageModel : List<Image>
+    {
+        public ImageModel()
+        {
+            string directoryOfImage = HttpContext.Current.Server.MapPath("~/Images/");
+            XDocument imageData = XDocument.Load(directoryOfImage + @"/ImageMetaData.xml");
+            var images = from image in imageData.Descendants("image") select new Image(image.Element("filename").Value, image.Element("description").Value);
+            this.AddRange(images.ToList<Image>());
         }
     }
 }
