@@ -15,9 +15,15 @@ namespace EladInon.Data
         }
 
         public DbSet<Location> Locations { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
+        public DbSet<Session> Sessions { get; set; }
+        public DbSet<SessionLocations> SessionLocations { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Location>().ToTable(nameof(Location));
+            modelBuilder.Entity<Picture>().ToTable(nameof(Picture));
+            modelBuilder.Entity<Session>().ToTable(nameof(Session));
+            modelBuilder.Entity<SessionLocations>().HasKey(sl => new { sl.SessionID, sl.LocationID });
 
         }
     }
