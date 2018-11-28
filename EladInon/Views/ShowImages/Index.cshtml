@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "כאן אמורות להיות תמונות";
+}
+
+<h2>ShowImages</h2>
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+    <label>session type:</label>
+    <select multiple="multiple" id="my-select" name="my-select[]">
+        @foreach (var item in Enum.GetNames(typeof(SessionType)))
+        {
+            <option value=@item>@item</option>
+
+        }
+    </select>
+    <label>location type:</label>
+    <select multiple="multiple" id="my-select" name="my-select[]">
+        @foreach (var item in Enum.GetNames(typeof(LocationType)))
+        {
+            <option value=@item>@item</option>
+        }
+    </select>
+    <button asp-area="" asp-action="Search">search</button>
+</div>
