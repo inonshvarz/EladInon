@@ -3,10 +3,10 @@
     ViewData["Title"] = "כאן אמורות להיות תמונות";
 }
 
-<h2>ShowImages</h2>
+<h1>הצגת תמונות וסירטונים</h1>
 
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <label>session type:</label>
+    <label>בחר סוג פעולה:</label>
     <select multiple="multiple" id="my-select" name="my-select[]">
         @foreach (var item in Enum.GetNames(typeof(SessionType)))
         {
@@ -14,7 +14,7 @@
 
         }
     </select>
-    <label>location type:</label>
+    <label>בחר מיקום:</label>
     <select multiple="multiple" id="my-select" name="my-select[]">
         @foreach (var item in Enum.GetNames(typeof(LocationType)))
         {
@@ -22,6 +22,19 @@
         }
     </select>
     <p>
-        <a asp-action="Search"> <input type="submit" value="Search" class="btn btn-default" /> |</a>
+        <a asp-action="Search"> <input type="submit" value="חיפוש" class="btn btn-default" /> |</a>
     </p>
 </div>
+<div>
+    <p>
+        <a asp-action="AddImage"> <input type="submit" value="הוספת תמונה" class="btn btn-default" /> |</a>
+    </p>
+</div>
+
+<fieldset>
+    <legend> הוספת תמונות (מנהלים בלבד) </legend>
+    <label for="Image">תמונה</label>
+    <input type="file" name="Image" />
+    <br />
+    <input type="submit" value="טעינת תמונה" />
+</fieldset>
