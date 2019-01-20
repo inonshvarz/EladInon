@@ -1,15 +1,31 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@{ var imagePath = "";
+    imagePath = @"images\" + "Photo1.jpg";
 }
+<!DOCTYPE html>
 <html>
-    <head>
-        <link href="~/css/site.css" rel="stylesheet" />
-    </head>
-    <body>
-        <h1>אתר התמונות והצילומים של עידית יקותיאל</h1>
+<head>
+    <title>הצגת תמונות</title>
+</head>
+<body>
+    <h1>
+        התמונות הכי מגניבות של עידית
+    </h1>
+    <form method="post" action="">
         <div>
-
+            I want to see:
+            <select name="photoChoice">
+                <option value="Photo1.jpg">Photo 1</option>
+            </select>
+            &nbsp;
+            <input type="submit" value="Submit" />
         </div>
-    </body>
+        <div style="padding: 10px;">
+            @if (imagePath != "")
+            {
+                <img src="@imagePath" alt="Sample Image" width="300px" />
+            }
+        </div>
+        <img src="images/Photo1.jpg" alt="Image" />
+    </form>
+</body>
 </html>
-
