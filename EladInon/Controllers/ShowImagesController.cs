@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,16 +19,11 @@ namespace EladInon.Controllers
         {
             this.context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
-
-        //public async Task<IActionResult> Search(IEnumerable<string>  locations, IEnumerable<string> sessions)
-        public async Task<IActionResult> Search()
-        {
-            var picture = context.Pictures.ToListAsync();
-            return null;
+            var pictures = context.Pictures.AsNoTracking();
+            return View(await pictures.ToListAsync());
+            
         }
     }
 }

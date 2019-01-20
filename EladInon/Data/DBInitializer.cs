@@ -26,8 +26,8 @@ namespace EladInon.Data
 
             var pictures = new Picture[]
             {
-                new Picture(locations[1],sessions.First(),@"C:\InonElad\Pictures\1.jpeg"),
-                new Picture(locations[0],sessions.First(), @"C:\InonElad\Pictures\2.jpeg")
+                new Picture(locations[1],sessions.First(),@"Pictures\1.jpeg"),
+                new Picture(locations[0],sessions.First(), @"Pictures\2.jpeg")
             };
 
             var sessionLocations = new SessionLocations[]

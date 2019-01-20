@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewData["Title"] = "Search";
+}
+
+<h2>Search</h2>
+
+<div>
+    @if (ViewData["Images"] is IEnumerable<string>)
+    {
+        foreach (string path in ViewData["Images"] as IEnumerable<string>)
+        {
+            <img src="path" width="100" height="100" />
+        }
+    }
+</div>
+
