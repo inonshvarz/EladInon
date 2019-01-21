@@ -16,6 +16,8 @@ namespace EladInon.Models
         public int ID { get; set; }
         public string Adress { get; set; }
         public LocationType LocationType { get; set; }
+        public decimal Location_X { get; set; }
+        public decimal Location_Y { get; set; }
         public virtual ICollection<SessionLocations> SessionLocationss { get; set; }
     }
 }

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<EladInon.Models.Location>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>הצגת מיקומי צילומים</h2>
+
+<p>
+    <a asp-action="Create">צור מיקום חדש</a>
+</p>
+<table class="table">
+    <thead>
+        <style>
+            clm {
+                color: blue;
+            }
+        </style>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Adress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LocationType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LocationType)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">ערוך</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">פרטים</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">מחק</a> |
+                    <clm data-lat="@item.Location_X" data-lng="@item.Location_Y" >הצג על המפה</clm>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<fieldset>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <div id="googleMap" style="height:300px;width:70%;"></div>
+    <script>
+       var center_x;
+        var center_y;
+        $("clm").click(function () {
+            alert($(this).data('lat'));
+           center_x = $(this).data('lat');
+           center_y = $(this).data('lng');
+        });
+
+        if (center_x == null || center_y == null) {
+            center_x = 32.0926072;
+            center_y = 34.8392178;
+        };
+
+        function myMap() {
+            var myCenter = new google.maps.LatLng(center_x, center_y, 20);
+            var mapProp = { center: myCenter, zoom: 16, scrollwheel: false, draggable: true, mapTypeId: google.maps.MapTypeId.ROADMAP };
+            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+            var marker = new google.maps.Marker({ position: myCenter });
+            marker.setMap(map);
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB84Wy0qplvZlKe7TPnt2G1dohdwlvSuPQ&callback=myMap"></script>
+</fieldset>
+
+

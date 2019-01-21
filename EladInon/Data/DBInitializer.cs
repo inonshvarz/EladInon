@@ -15,8 +15,8 @@ namespace EladInon.Data
             if (context.Locations.Any()) return;
             var locations = new Location[]
             {
-                new Location(){ID= 1,Adress="AmudeyAmram",LocationType = Dessert},
-                new Location(){ID = 2, Adress="YamSuf",LocationType= SeaBeach}
+                new Location(){ID= 1,Adress="AmudeyAmram",LocationType = Dessert, Location_X = 32, Location_Y = 23 }, 
+                new Location(){ID = 2, Adress="YamSuf",LocationType= SeaBeach, Location_X = 35, Location_Y = 23 }
             };
 
             var sessions = new Session[]
