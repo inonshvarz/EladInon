@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 namespace EladInon.Models
 {
-    public class Session
+    public class Album
     {
-        public Session()
+        public Album()
         {
-            SessionLocations = new List<SessionLocations>();
+            AlbumLocations = new List<AlbumLocations>();
         }
-        public Session(int id, DateTime time, SessionType sessionType):this()
+        public Album(int id, DateTime time, AlbumType AlbumType):this()
         {
             Time = time;
-            SessionType = sessionType;
+            AlbumType = AlbumType;
             ID = id;
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
         public DateTime Time { get; set; }
-        public SessionType SessionType { get; set; }
-        public virtual ICollection<SessionLocations> SessionLocations { get; set; }
+        public AlbumType AlbumType { get; set; }
+        public virtual ICollection<AlbumLocations> AlbumLocations { get; set; }
     }
 }
