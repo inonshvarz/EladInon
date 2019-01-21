@@ -44,6 +44,7 @@ namespace EladInon.Data
 
             foreach (var Album in Albums)
             {
+                Album.Pictures = pictures;
                 context.Albums.Add(Album);
             }
             context.SaveChanges();

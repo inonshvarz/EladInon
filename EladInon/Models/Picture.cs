@@ -13,11 +13,11 @@ namespace EladInon.Models
         {
 
         }
-        public Picture(Location location, Album Album, string path)
+        public Picture(Location location, Album album, string path)
         {
             Location = location;
             Path = path;
-            Album = Album;
+            Album = album;
         }
 
         public int ID { get; set; }

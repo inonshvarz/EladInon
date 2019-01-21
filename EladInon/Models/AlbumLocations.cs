@@ -7,12 +7,12 @@ namespace EladInon.Models
 {
     public class AlbumLocations
     {
-        public AlbumLocations(int locationID, Location location, int sesionID, Album Album)
+        public AlbumLocations(int locationID, Location location, int sesionID, Album album)
         {
             LocationID = locationID;
             Location = location;
             AlbumID = sesionID;
-            Album = Album;
+            Album = album;
         }
         public AlbumLocations()
         {
