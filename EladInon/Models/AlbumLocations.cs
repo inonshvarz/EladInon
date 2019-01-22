@@ -5,23 +5,23 @@ using System.Threading.Tasks;
 
 namespace EladInon.Models
 {
-    public class SessionLocations
+    public class AlbumLocations
     {
-        public SessionLocations(int locationID, Location location, int sesionID, Session session)
+        public AlbumLocations(int locationID, Location location, int sesionID, Album album)
         {
             LocationID = locationID;
             Location = location;
-            SessionID = sesionID;
-            Session = session;
+            AlbumID = sesionID;
+            Album = album;
         }
-        public SessionLocations()
+        public AlbumLocations()
         {
 
         }
 
         public int LocationID { get; set; }
         public Location Location { get; set; }
-        public int SessionID { get; set; }
-        public Session Session { get; set; }
+        public int AlbumID { get; set; }
+        public Album Album { get; set; }
     }
 }

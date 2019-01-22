@@ -20,21 +20,21 @@ namespace EladInon.Data
                 new Location(){ID = 3, Adress="male levona",LocationType= SeaBeach, Location_X = 32.0926099m, Location_Y = 34.8312999m }
             };
 
-            var sessions = new Session[]
+            var Albums = new Album[]
             {
-                new Session(1, new DateTime(2018,11,27),SessionType.Another)
+                new Album(1, new DateTime(2018,11,27),AlbumType.Another)
             };
 
             var pictures = new Picture[]
             {
-                new Picture(locations[1],sessions.First(),@"Pictures\1.jpeg"),
-                new Picture(locations[0],sessions.First(), @"Pictures\2.jpeg")
+                new Picture(locations[1],Albums.First(),@"Pictures\1.jpeg"),
+                new Picture(locations[0],Albums.First(), @"Pictures\2.jpeg")
             };
 
-            var sessionLocations = new SessionLocations[]
+            var AlbumLocations = new AlbumLocations[]
             {
-                new SessionLocations(locations.First().ID,locations.First(),sessions.First().ID,sessions.First()),
-                new SessionLocations(locations.Last().ID, locations.Last(), sessions.First().ID, sessions.First())
+                new AlbumLocations(locations.First().ID,locations.First(),Albums.First().ID,Albums.First()),
+                new AlbumLocations(locations.Last().ID, locations.Last(), Albums.First().ID, Albums.First())
             };
 
             foreach (var location in locations)
@@ -43,17 +43,18 @@ namespace EladInon.Data
             }
             context.SaveChanges();
 
-            foreach (var session in sessions)
+            foreach (var Album in Albums)
             {
-                context.Sessions.Add(session);
+                Album.Pictures = pictures;
+                context.Albums.Add(Album);
             }
             context.SaveChanges();
             foreach (var picture in pictures)
                 context.Pictures.Add(picture);
             context.SaveChanges();
-            foreach (var item in sessionLocations)
+            foreach (var item in AlbumLocations)
             {
-                context.SessionLocations.Add(item);
+                context.AlbumLocations.Add(item);
             }
             context.SaveChanges();
         }

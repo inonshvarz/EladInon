@@ -1,5 +1,7 @@
-﻿ using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,16 +13,19 @@ namespace EladInon.Models
         {
 
         }
-        public Picture(Location location, Session session, string path)
+        public Picture(Location location, Album album, string path)
         {
             Location = location;
             Path = path;
-            Session = session;
+            Album = album;
         }
 
         public int ID { get; set; }
         public Location Location { get; set; }
-        public Session Session { get; set; }
+        public Album Album { get; set; }
         public string Path { get; set; }
+
+        [NotMapped]
+        public IFormFile Image { get; set; }
     }
 }

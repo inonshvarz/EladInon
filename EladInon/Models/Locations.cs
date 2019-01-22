@@ -10,7 +10,7 @@ namespace EladInon.Models
     {
         public Location()
         {
-            SessionLocationss = new List<SessionLocations>();
+            AlbumLocationss = new List<AlbumLocations>();
         }
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
@@ -18,6 +18,6 @@ namespace EladInon.Models
         public LocationType LocationType { get; set; }
         public decimal Location_X { get; set; }
         public decimal Location_Y { get; set; }
-        public virtual ICollection<SessionLocations> SessionLocationss { get; set; }
+        public virtual ICollection<AlbumLocations> AlbumLocationss { get; set; }
     }
 }
