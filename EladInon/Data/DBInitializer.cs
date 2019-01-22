@@ -15,9 +15,9 @@ namespace EladInon.Data
             if (context.Locations.Any()) return;
             var locations = new Location[]
             {
-                new Location(){ID= 1,Adress="AmudeyAmram",LocationType = Dessert, Location_X = 32.0926000m, Location_Y = 34.8312178m }, 
-                new Location(){ID = 2, Adress="YamSuf",LocationType= SeaBeach, Location_X = 32.0926099m, Location_Y = 34.8312999m },
-                new Location(){ID = 3, Adress="male levona",LocationType= SeaBeach, Location_X = 32.0926099m, Location_Y = 34.8312999m }
+                //new Location(){ID= 1,Adress="AmudeyAmram",LocationType = Dessert, Location_X = 32.0926000m, Location_Y = 34.8312178m }, 
+                //new Location(){ID = 2, Adress="YamSuf",LocationType= SeaBeach, Location_X = 32.0926099m, Location_Y = 34.8312999m },
+                //new Location(){ID = 3, Adress="male levona",LocationType= SeaBeach, Location_X = 32.0926099m, Location_Y = 34.8312999m }
             };
 
             var Albums = new Album[]
