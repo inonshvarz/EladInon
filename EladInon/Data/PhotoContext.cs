@@ -17,13 +17,11 @@ namespace EladInon.Data
         public DbSet<Location> Locations { get; set; }
         public DbSet<Picture> Pictures { get; set; }
         public DbSet<Album> Albums { get; set; }
-        public DbSet<AlbumLocations> AlbumLocations { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Location>().ToTable(nameof(Location));
+            modelBuilder.Entity<Location>().HasMany(l=>l.Albums).WithOne(a=>a.AlbumLocation).OnDelete(DeleteBehavior.SetNull);
             modelBuilder.Entity<Picture>().ToTable(nameof(Picture));
-            modelBuilder.Entity<Album>().ToTable(nameof(Album));
-            modelBuilder.Entity<AlbumLocations>().HasKey(sl => new { sl.AlbumID, sl.LocationID });
+            modelBuilder.Entity<Album>().HasMany(a => a.Pictures).WithOne(p => p.ContainingAlbum).OnDelete(DeleteBehavior.SetNull);
 
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,23 +12,25 @@ namespace EladInon.Models
     {
         public Album()
         {
-            AlbumLocations = new List<AlbumLocations>();
         }
-        public Album(int id, DateTime time, AlbumType albumType):this()
+        public Album(DateTime time, AlbumType albumType):this()
         {
             Time = time;
             AlbumType = albumType;
-            ID = id;
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
+        public string Name { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Time { get; set; }
         public AlbumType AlbumType { get; set; }
-        public virtual ICollection<AlbumLocations> AlbumLocations { get; set; }
+        public int? LocationID { get; set; }
+        public Location AlbumLocation { get; set; }
         public virtual ICollection<Picture> Pictures { get; set; }
 
         [NotMapped]
         public virtual ICollection<IFormFile> Images { get; set; }
+
     }
 }

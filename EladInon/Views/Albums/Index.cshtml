@@ -29,15 +29,22 @@
                 @Html.DisplayFor(modelItem => item.Time)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.AlbumType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlbumLocation.Address)
             </td>
             <td>
                 @if (item.Pictures != null)
                 {
                     foreach (var picture in item.Pictures)
                     {
-                        <img src="@picture.Path" width="200" height="150"/>
-                    }}
+                        <img src="@picture.Path" width="200" height="150" />
+                    }
+                }
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
