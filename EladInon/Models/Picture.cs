@@ -13,18 +13,16 @@ namespace EladInon.Models
         {
 
         }
-        public Picture(Location location, Album album, string path)
+        public Picture(Album album, string path)
         {
-            Location = location;
             Path = path;
-            Album = album;
+            ContainingAlbum = album;
         }
 
         public int ID { get; set; }
-        public Location Location { get; set; }
-        public Album Album { get; set; }
+        public int? AlbumID { get; set; }
+        public Album ContainingAlbum { get; set; }
         public string Path { get; set; }
-
         [NotMapped]
         public IFormFile Image { get; set; }
     }

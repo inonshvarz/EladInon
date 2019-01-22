@@ -50,6 +50,7 @@ namespace EladInon.Controllers
         // GET: Pictures/Create
         public IActionResult Create()
         {
+            ViewData["Albums"] = new SelectList(_context.Albums, nameof(Album.ID), nameof(Album.Name));
             return View();
         }
 
@@ -58,7 +59,7 @@ namespace EladInon.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Image")] Picture picture)
+        public async Task<IActionResult> Create([Bind("ID,Image,AlbumID")] Picture picture)
         {
             if (ModelState.IsValid)
             {
@@ -162,6 +163,8 @@ namespace EladInon.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var picture = await _context.Pictures.FindAsync(id);
+            var fullPath = Path.Combine(env.WebRootPath, picture.Path);
+            System.IO.File.Delete(fullPath);
             _context.Pictures.Remove(picture);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

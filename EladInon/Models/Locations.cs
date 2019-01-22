@@ -10,14 +10,13 @@ namespace EladInon.Models
     {
         public Location()
         {
-            AlbumLocationss = new List<AlbumLocations>();
+            Albums = new List<Album>();
         }
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
-        public string Adress { get; set; }
+        public string Address { get; set; }
         public LocationType LocationType { get; set; }
         public decimal Location_X { get; set; }
         public decimal Location_Y { get; set; }
-        public virtual ICollection<AlbumLocations> AlbumLocationss { get; set; }
+        public virtual ICollection<Album> Albums { get; set; }
     }
 }

@@ -54,7 +54,7 @@ namespace EladInon.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Adress,LocationType,Location_X,Location_Y")] Location location)
+        public async Task<IActionResult> Create([Bind("ID,Address,LocationType,Location_X,Location_Y")] Location location)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace EladInon.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Adress,LocationType,Location_X,Location_Y")] Location location)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Address,LocationType,Location_X,Location_Y")] Location location)
         {
             if (id != location.ID)
             {

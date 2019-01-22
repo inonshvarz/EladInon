@@ -22,7 +22,7 @@ namespace EladInon.Controllers
         // GET: Albums
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Albums.Include(a => a.Pictures).ToListAsync());
+            return View(await _context.Albums.Include(a => a.Pictures).Include(a=>a.AlbumLocation).ToListAsync());
         }
 
         // GET: Albums/Details/5
@@ -46,6 +46,7 @@ namespace EladInon.Controllers
         // GET: Albums/Create
         public IActionResult Create()
         {
+            ViewData["Locations"] = new SelectList(_context.Locations, nameof(Location.ID), nameof(Location.Address));
             return View();
         }
 
@@ -54,7 +55,7 @@ namespace EladInon.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Time,AlbumType,Images")] Album album)
+        public async Task<IActionResult> Create([Bind("Time,AlbumType,Name,LocationID")] Album album)
         {
             if (ModelState.IsValid)
             {
