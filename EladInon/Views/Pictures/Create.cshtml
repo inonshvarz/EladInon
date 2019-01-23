@@ -4,32 +4,32 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<h2>יצירת תמונה חדשה</h2>
 
-<h4>Picture</h4>
+<h4>תמונה</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form enctype="multipart/form-data" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Image">טען ת:</label>
+                <label asp-for="Image">טען תמונה:</label>
                 <input asp-for="Image" type="file" name="Image" id="Image" />
             </div>
             <div class="form-group">
-                <label asp-for="AlbumID" class="control-label"></label>
+                <label asp-for="AlbumID" class="control-label">קשר תמונה לאלבום</label>
                 <select asp-for="AlbumID" class="form-control" asp-items="ViewBag.Albums">
-                    <option selected="selected" value="">Please select</option>
+                    <option selected="selected" value="">בחר אלבום</option>
                 </select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="צור ושמור" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">חזור לרשימת תמונות</a>
 </div>
 
