@@ -34,7 +34,8 @@ namespace EladInon.Controllers
             if (locationSearchString == null)
                 locationSearchString = albumFilter;
             ViewData["albumFilter"] = albumSearchString;
-            var picture = string.IsNullOrEmpty(albumSearchString) ? _context.Pictures : _context.Pictures.Where(p => p.ContainingAlbum.Name == albumSearchString);
+            var picture = _context.Pictures.Include(p => p.ContainingAlbum);
+            picture=   string.IsNullOrEmpty(albumSearchString) ? _context.Pictures : _context.Pictures.Where(p => p.ContainingAlbum.Name == albumSearchString);
             picture = string.IsNullOrEmpty(locationSearchString) ? picture : picture.Where(p => p.ContainingAlbum.AlbumLocation.Address == locationSearchString);
             return View(await picture.ToListAsync());
         }

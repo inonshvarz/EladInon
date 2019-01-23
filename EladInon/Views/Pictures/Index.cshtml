@@ -9,6 +9,20 @@
 <p>
     <a asp-action="Create">צור תמונה</a>
 </p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by album: <input type="text" name="albumSearchString" value="@ViewData["albumFilter"]" />
+            Find by location: <input type="text" name="locationSearchString" value="@ViewData["locationFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
+
+
 <table class="table">
     <thead>
         <tr>
@@ -19,10 +33,11 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
-                <img src="@item.Path" width="200" height="200" />
+                <img src="@item.Path" width="200" height="200"/>
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.ID">ערוך</a> |
@@ -30,6 +45,6 @@
                 <a asp-action="Delete" asp-route-id="@item.ID">מחק</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
