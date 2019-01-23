@@ -24,9 +24,19 @@ namespace EladInon.Controllers
         }
 
         // GET: Pictures
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string albumFilter, string albumSearchString, string locationFilter, string locationSearchString)
         {
-            return View(await _context.Pictures.ToListAsync());
+            if (albumSearchString == null)
+                albumSearchString = albumFilter;
+            if (locationSearchString == null)
+                locationSearchString = locationFilter;
+            ViewData["locationFilter"] = locationSearchString;
+            if (locationSearchString == null)
+                locationSearchString = albumFilter;
+            ViewData["albumFilter"] = albumSearchString;
+            var picture = string.IsNullOrEmpty(albumSearchString) ? _context.Pictures : _context.Pictures.Where(p => p.ContainingAlbum.Name == albumSearchString);
+            picture = string.IsNullOrEmpty(locationSearchString) ? picture : picture.Where(p => p.ContainingAlbum.AlbumLocation.Address == locationSearchString);
+            return View(await picture.ToListAsync());
         }
 
         // GET: Pictures/Details/5
