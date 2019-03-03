@@ -99,7 +99,7 @@ namespace EladInon.Controllers
             return View(picture);
         }
 
-       
+
         // GET: Pictures/Create
         public IActionResult Create()
         {
@@ -227,5 +227,49 @@ namespace EladInon.Controllers
         {
             return _context.Pictures.Any(e => e.ID == id);
         }
+
+        public ActionResult Statistics()
+        {
+            return View();
+        }
+
+        public ActionResult LocationTypeStatistic()
+        {
+            IQueryable<Picture> pictures = _context.Pictures.Include(p => p.ContainingAlbum).ThenInclude(a => a.AlbumLocation);
+            var dict = pictures.GroupBy(picture => picture.ContainingAlbum.AlbumLocation.LocationType).
+                                    Select(g => new Dictionary<string, dynamic>()
+                                                    {
+                                                        {"label", g.Key.ToString()},
+                                                        {"value", g.Count()}
+                                                    });
+
+            return Json(dict);
+        }
+
+        public ActionResult AlbumTypeStatistic()
+        {
+            IQueryable<Picture> pictures = _context.Pictures.Include(p => p.ContainingAlbum);
+            var dict = pictures.GroupBy(picture => picture.ContainingAlbum.AlbumType).
+                                    Select(g => new Dictionary<string, dynamic>()
+                                                    {
+                                                        {"label", g.Key.ToString()},
+                                                        {"value", g.Count()}
+                                                    });
+
+            return Json(dict);
+        }
+        public ActionResult LocationsStatistic()
+        {
+            IQueryable<Picture> pictures = _context.Pictures.Include(p => p.ContainingAlbum).ThenInclude(a => a.AlbumLocation);
+            var dict = pictures.GroupBy(picture => picture.ContainingAlbum.AlbumLocation.Address).
+                                    Select(g => new Dictionary<string, dynamic>()
+                                                    {
+                                                        {"label", g.Key.ToString()},
+                                                        {"value", g.Count()}
+                                                    });
+
+            return Json(dict);
+        }
+        
     }
 }
