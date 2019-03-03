@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EladInon.Data;
 using EladInon.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EladInon.Controllers
 {
+    [Authorize]
     public class LocationsController : Controller
     {
         private readonly PhotoContext _context;
@@ -20,12 +22,14 @@ namespace EladInon.Controllers
         }
 
         // GET: Locations
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Locations.ToListAsync());
         }
 
         // GET: Locations/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

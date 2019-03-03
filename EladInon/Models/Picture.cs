@@ -19,7 +19,7 @@ namespace EladInon.Models
             ContainingAlbum = album;
         }
 
-        public int ID { get; set; }
+        public int? ID { get; set; }
         public int? AlbumID { get; set; }
         public Album ContainingAlbum { get; set; }
         public string Path { get; set; }

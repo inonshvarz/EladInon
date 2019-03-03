@@ -13,6 +13,17 @@ namespace EladInon.Data
         {
             context.Database.EnsureCreated();
             if (context.Locations.Any()) return;
+            var user = new User()
+            {
+                UserName = "Admin",
+                Password = "12345678",
+                FirstName = "Admin",
+                LastName = "Example",
+                EMail = "Admin@Example.com",
+                IsAdmin = true
+            };
+            context.Users.Add(user);
+            context.SaveChanges();
             var locations = new Location[]
             {
                 new Location(){Address="AmudeyAmram",LocationType = Dessert, Location_X = 32.0926000m, Location_Y = 34.8312178m },
@@ -25,19 +36,15 @@ namespace EladInon.Data
                 new Album(new DateTime(2018,11,27),AlbumType.Another){Name = "MishMash",LocationID = locations.First().ID,AlbumLocation = locations.First() },
                 new Album(new DateTime(2018,11,26),AlbumType.Family){Name = "Family" ,LocationID = locations.First().ID,AlbumLocation = locations.First() }
             };
-            locations.First().Albums = Albums;
             var pictures = new Picture[]
             {
                 new Picture(Albums.First(),@"Pictures\1.jpeg"),
                 new Picture(Albums.First(), @"Pictures\2.jpeg")
             };
-            Albums.First().Pictures = pictures;
 
           
             foreach (var location in locations)
-            {
                 context.Locations.Add(location);
-            }
             context.SaveChanges();
 
             foreach (var Album in Albums)
@@ -45,10 +52,13 @@ namespace EladInon.Data
             context.SaveChanges();
 
             foreach (var picture in pictures)
-            {
                 context.Pictures.Add(picture);
-            }
             context.SaveChanges();
+            context.Albums.First().Pictures = pictures;
+            context.SaveChanges();
+            context.Locations.First().Albums = Albums;
+            context.SaveChanges();
+            
         }
     }
 }

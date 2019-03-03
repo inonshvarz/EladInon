@@ -9,9 +9,11 @@ using EladInon.Data;
 using EladInon.Models;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EladInon.Controllers
 {
+    [Authorize]
     public class PicturesController : Controller
     {
         private IHostingEnvironment env;
@@ -24,20 +26,59 @@ namespace EladInon.Controllers
         }
 
         // GET: Pictures
-        public async Task<IActionResult> Index(string albumFilter, string albumSearchString, string locationFilter, string locationSearchString)
+        [AllowAnonymous]
+        public async Task<IActionResult> Index(string albumFilter,
+                                               string albumSearchString,
+                                               string locationFilter,
+                                               string locationSearchString,
+                                               string albumTypeFilter,
+                                               string albumTypeSearchString,
+                                               string locationTypeFilter,
+                                               string locationTypeSearchString)
         {
-            if (albumSearchString == null)
-                albumSearchString = albumFilter;
-            if (locationSearchString == null)
-                locationSearchString = locationFilter;
-            ViewData["locationFilter"] = locationSearchString;
-            if (locationSearchString == null)
-                locationSearchString = albumFilter;
-            ViewData["albumFilter"] = albumSearchString;
-            var picture = _context.Pictures.Include(p => p.ContainingAlbum);
-            picture=   string.IsNullOrEmpty(albumSearchString) ? _context.Pictures : _context.Pictures.Where(p => p.ContainingAlbum.Name == albumSearchString);
-            picture = string.IsNullOrEmpty(locationSearchString) ? picture : picture.Where(p => p.ContainingAlbum.AlbumLocation.Address == locationSearchString);
-            return View(await picture.ToListAsync());
+            InitSearchLists();
+            VerifyParameters();
+            UpdateFilters();
+            var filteredPictures = GetFilteredPictures();
+            return View(await filteredPictures.ToListAsync());
+
+            IQueryable<Picture> GetFilteredPictures()
+            {
+                IQueryable<Picture> pictures = _context.Pictures.Include(p => p.ContainingAlbum).ThenInclude(a => a.AlbumLocation);
+                pictures = string.IsNullOrEmpty(albumSearchString) ? pictures : pictures.Where(p => p.ContainingAlbum.Name == albumSearchString);
+                pictures = string.IsNullOrEmpty(locationSearchString) ? pictures : pictures.Where(p => p.ContainingAlbum.AlbumLocation.Address == locationSearchString);
+                pictures = string.IsNullOrEmpty(locationTypeSearchString) ? pictures : pictures.Where(p => p.ContainingAlbum.AlbumLocation.LocationType.ToString() == locationTypeSearchString);
+                pictures = string.IsNullOrEmpty(albumTypeSearchString) ? pictures : pictures.Where(p => p.ContainingAlbum.AlbumType.ToString() == albumTypeSearchString);
+                return pictures;
+            }
+
+            void UpdateFilters()
+            {
+                ViewData["locationFilter"] = locationSearchString;
+                ViewData["albumFilter"] = albumSearchString;
+                ViewData["locationTypeFilter"] = locationTypeSearchString;
+                ViewData["albumTypeFilter"] = albumTypeSearchString;
+            }
+
+            void InitSearchLists()
+            {
+                ViewData["Locations"] = new SelectList(_context.Locations, nameof(Location.Address), nameof(Location.Address));
+                ViewData["Albums"] = new SelectList(_context.Albums, nameof(Album.Name), nameof(Album.Name));
+                ViewData["AlbumTypes"] = new SelectList(Enum.GetValues(typeof(AlbumType)));
+                ViewData["LocationTypes"] = new SelectList(Enum.GetValues(typeof(LocationType)));
+            }
+
+            void VerifyParameters()
+            {
+                if (albumSearchString == null)
+                    albumSearchString = albumFilter;
+                if (locationSearchString == null)
+                    locationSearchString = locationFilter;
+                if (albumTypeSearchString == null)
+                    albumTypeSearchString = albumTypeFilter;
+                if (locationTypeSearchString == null)
+                    locationTypeSearchString = locationTypeFilter;
+            }
         }
 
         // GET: Pictures/Details/5
@@ -58,6 +99,7 @@ namespace EladInon.Controllers
             return View(picture);
         }
 
+       
         // GET: Pictures/Create
         public IActionResult Create()
         {
@@ -181,7 +223,7 @@ namespace EladInon.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PictureExists(int id)
+        private bool PictureExists(int? id)
         {
             return _context.Pictures.Any(e => e.ID == id);
         }

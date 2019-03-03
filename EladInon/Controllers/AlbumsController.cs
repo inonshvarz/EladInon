@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EladInon.Data;
 using EladInon.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EladInon.Controllers
 {
+    [Authorize]
     public class AlbumsController : Controller
     {
         private readonly PhotoContext _context;
@@ -20,12 +22,15 @@ namespace EladInon.Controllers
         }
 
         // GET: Albums
+        [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Albums.Include(a => a.Pictures).Include(a=>a.AlbumLocation).ToListAsync());
         }
 
         // GET: Albums/Details/5
+        [AllowAnonymous]
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -146,7 +151,7 @@ namespace EladInon.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AlbumExists(int id)
+        private bool AlbumExists(int? id)
         {
             return _context.Albums.Any(e => e.ID == id);
         }
