@@ -26,9 +26,9 @@ namespace EladInon.Data
             context.SaveChanges();
             var locations = new Location[]
             {
-                new Location(){Address="AmudeyAmram",LocationType = Dessert, Location_X = 32.0926000m, Location_Y = 34.8312178m },
-                new Location(){Address="YamSuf",LocationType= SeaBeach, Location_X = 32.0926099m, Location_Y = 34.8312999m },
-                new Location(){Address="male levona",LocationType= SeaBeach, Location_X = 32.0926099m, Location_Y = 34.8312999m }
+                new Location(){Address="AmudeyAmram",LocationType = Dessert, Location_X = 29.652802m, Location_Y = 34.932271m },
+                new Location(){Address="YamSuf",LocationType= SeaBeach, Location_X = 29.546229m, Location_Y = 34.969302m },
+                new Location(){Address="male levona",LocationType= SeaBeach, Location_X = 32.054462m, Location_Y = 35.239503m }
             };
 
             var Albums = new Album[]

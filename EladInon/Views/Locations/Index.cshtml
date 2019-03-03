@@ -40,7 +40,7 @@
                     <a asp-action="Edit" asp-route-id="@item.ID">ערוך</a> |
                     <a asp-action="Details" asp-route-id="@item.ID">פרטים</a> |
                     <a asp-action="Delete" asp-route-id="@item.ID">מחק</a> |
-                    <clm data-lat="@item.Location_X" data-lng="@item.Location_Y">הצג על המפה</clm>
+                    <button data-lat="@item.Location_X" data-lng="@item.Location_Y">הצג על המפה</button>
                 </td>
             </tr>
         }
@@ -61,11 +61,10 @@
         var mapProp;
         var map;
 
-        $("clm").click(function () {
+        $("button").click(function () {
             center_lat = $(this).data('lat');
             center_lng = $(this).data('lng');
-            newLocation(map, center_lat, center_lng);
-            setMarkers(myCenter, map);
+            myMap();
         });
 
         if (center_lat == null || center_lng == null) {
@@ -74,8 +73,11 @@
         };
 
         function myMap() {
-            myCenter = new google.maps.LatLng(center_lat, center_lng);
-            mapProp = { center: myCenter, zoom: 16, scrollwheel: false, draggable: true, mapTypeId: google.maps.MapTypeId.ROADMAP };
+            myCenter = {
+                lat: center_lat,
+                lng: center_lng
+            }
+            mapProp = { center: myCenter, zoom: 14, scrollwheel: true, draggable: true, mapTypeId: google.maps.MapTypeId.ROADMAP };
             map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
             setMarkers(myCenter, map);
 
@@ -86,12 +88,6 @@
             marker.setMap(map);
         };
 
-        function newLocation(map, newLat, newLng) {
-            map.setCenter({
-                lat: newLat,
-                lng: newLng
-            });
-        };
     </script>
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB84Wy0qplvZlKe7TPnt2G1dohdwlvSuPQ&callback=myMap"></script>
