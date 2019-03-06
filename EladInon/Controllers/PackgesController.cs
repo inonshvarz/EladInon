@@ -23,9 +23,44 @@ namespace EladInon.Controllers
 
         [AllowAnonymous]
         // GET: Packges
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string albumTypeFilter,
+                                               string albumTypeSearchString,
+                                               string priceFilter,
+                                               string priceSearchString)
         {
-            return View(await _context.Packges.ToListAsync());
+            InitSearchLists();
+            VerifyParameters();
+            UpdateFilters();
+            var filteredpackages = GetFilteredpackages();
+            return View(await filteredpackages.ToListAsync());
+
+            IQueryable<Packge> GetFilteredpackages()
+            {
+                IQueryable<Packge> packages = _context.Packges;
+                packages = string.IsNullOrEmpty(priceSearchString) ? packages : packages.Where(p => p.Price.ToString() == priceSearchString);
+                packages = string.IsNullOrEmpty(albumTypeSearchString) ? packages : packages.Where(p => p.AlbumType.ToString() == albumTypeSearchString);
+                return packages;
+            }
+
+            void UpdateFilters()
+            {
+                ViewData["priceFilter"] = priceSearchString;
+                ViewData["albumTypeFilter"] = albumTypeSearchString;
+            }
+
+            void InitSearchLists()
+            {
+                ViewData["AlbumTypes"] = new SelectList(Enum.GetValues(typeof(AlbumType)));
+                ViewData["Prices"] = new SelectList(_context.Packges.Select(p=>p.Price).Distinct());
+            }
+
+            void VerifyParameters()
+            {
+                if (albumTypeSearchString == null)
+                    albumTypeSearchString = albumTypeFilter;
+                if (priceSearchString == null)
+                    priceSearchString = priceFilter;
+            }
         }
 
         [AllowAnonymous]

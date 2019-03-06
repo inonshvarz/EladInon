@@ -12,6 +12,22 @@
         <a asp-action="Create">Create New</a>
     </p>
 }
+
+<form asp-action="Index" method="get">
+<div class="form-actions no-color">
+    <p>
+        <select asp-items="ViewBag.AlbumTypes" name="albumTypeSearchString" text="@ViewData["albumTypeFilter"]">
+            <option selected="selected" value="">בחר סוג אלבום</option>
+        </select>
+        <select asp-items="ViewBag.Prices" name="priceSearchString" text="@ViewData["priceFilter"]">
+            <option selected="selected" value="">בחר מחיר</option>
+        </select>
+        <input type="submit" value="Search" class="btn btn-default" /> |
+        <a asp-action="Index">Back to Full List</a>
+    </p>
+</div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
