@@ -23,9 +23,44 @@ namespace EladInon.Controllers
 
         // GET: Locations
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string locationFilter,
+                                               string locationSearchString,
+                                               string locationTypeFilter,
+                                               string locationTypeSearchString)
         {
-            return View(await _context.Locations.ToListAsync());
+            InitSearchLists();
+            VerifyParameters();
+            UpdateFilters();
+            var filteredLocations = GetFilteredLocations();
+            return View(await filteredLocations.ToListAsync());
+
+            IQueryable<Location> GetFilteredLocations()
+            {
+                IQueryable<Location> locations = _context.Locations;
+                locations = string.IsNullOrEmpty(locationSearchString) ? locations : locations.Where(l => l.Address == locationSearchString);
+                locations = string.IsNullOrEmpty(locationTypeSearchString) ? locations : locations.Where(l => l.LocationType.ToString() == locationTypeSearchString);
+                return locations;
+            }
+
+            void UpdateFilters()
+            {
+                ViewData["locationFilter"] = locationSearchString;
+                ViewData["locationTypeFilter"] = locationTypeSearchString;
+            }
+
+            void InitSearchLists()
+            {
+                ViewData["Locations"] = new SelectList(_context.Locations, nameof(Location.Address), nameof(Location.Address));
+                ViewData["LocationTypes"] = new SelectList(Enum.GetValues(typeof(LocationType)));
+            }
+
+            void VerifyParameters()
+            {
+                if (locationSearchString == null)
+                    locationSearchString = locationFilter;
+                if (locationTypeSearchString == null)
+                    locationTypeSearchString = locationTypeFilter;
+            }
         }
 
         // GET: Locations/Details/5

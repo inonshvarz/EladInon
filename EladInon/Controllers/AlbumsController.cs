@@ -23,9 +23,58 @@ namespace EladInon.Controllers
 
         // GET: Albums
         [AllowAnonymous]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string albumFilter,
+                                               string albumSearchString,
+                                               string locationFilter,
+                                               string locationSearchString,
+                                               string albumTypeFilter,
+                                               string albumTypeSearchString,
+                                               string locationTypeFilter,
+                                               string locationTypeSearchString)
         {
-            return View(await _context.Albums.Include(a => a.Pictures).Include(a=>a.AlbumLocation).ToListAsync());
+            InitSearchLists();
+            VerifyParameters();
+            UpdateFilters();
+            var filteredalbums = GetFilteredalbums();
+            return View(await filteredalbums.ToListAsync());
+
+            IQueryable<Album> GetFilteredalbums()
+            {
+                IQueryable<Album> albums = _context.Albums.Include(a => a.Pictures).Include(a => a.AlbumLocation);
+                albums = string.IsNullOrEmpty(albumSearchString) ? albums : albums.Where(a => a.Name == albumSearchString);
+                albums = string.IsNullOrEmpty(locationSearchString) ? albums : albums.Where(a => a.AlbumLocation.Address == locationSearchString);
+                albums = string.IsNullOrEmpty(locationTypeSearchString) ? albums : albums.Where(a => a.AlbumLocation.LocationType.ToString() == locationTypeSearchString);
+                albums = string.IsNullOrEmpty(albumTypeSearchString) ? albums : albums.Where(a => a.AlbumType.ToString() == albumTypeSearchString);
+                return albums;
+            }
+
+            void UpdateFilters()
+            {
+                ViewData["locationFilter"] = locationSearchString;
+                ViewData["albumFilter"] = albumSearchString;
+                ViewData["locationTypeFilter"] = locationTypeSearchString;
+                ViewData["albumTypeFilter"] = albumTypeSearchString;
+            }
+
+            void InitSearchLists()
+            {
+                ViewData["Locations"] = new SelectList(_context.Locations, nameof(Location.Address), nameof(Location.Address));
+                ViewData["Albums"] = new SelectList(_context.Albums, nameof(Album.Name), nameof(Album.Name));
+                ViewData["AlbumTypes"] = new SelectList(Enum.GetValues(typeof(AlbumType)));
+                ViewData["LocationTypes"] = new SelectList(Enum.GetValues(typeof(LocationType)));
+            }
+
+            void VerifyParameters()
+            {
+                if (albumSearchString == null)
+                    albumSearchString = albumFilter;
+                if (locationSearchString == null)
+                    locationSearchString = locationFilter;
+                if (albumTypeSearchString == null)
+                    albumTypeSearchString = albumTypeFilter;
+                if (locationTypeSearchString == null)
+                    locationTypeSearchString = locationTypeFilter;
+            }
         }
 
         // GET: Albums/Details/5

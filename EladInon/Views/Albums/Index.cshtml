@@ -10,6 +10,28 @@
 <p>
     <a asp-action="Create">צור אלבום חדש</a>
 </p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            <select asp-items="ViewBag.AlbumTypes" name="albumTypeSearchString" text="@ViewData["albumTypeFilter"]">
+                <option selected="selected" value="">בחר סוג אלבום</option>
+            </select>
+            <select asp-items="ViewBag.LocationTypes" name="locationTypeSearchString" text="@ViewData["locationTypeFilter"]">
+                <option selected="selected" value="">בחר סוג מיקום</option>
+            </select>
+            <select asp-items="ViewBag.Locations" name="locationSearchString" text="@ViewData["locationFilter"]">
+                <option selected="selected" value="">בחר מיקום צילומים</option>
+            </select>
+            <select asp-items="ViewBag.Albums" name="albumSearchString" text="@ViewData["albumFilter"]">
+                <option selected="selected" value="">בחר אלבום</option>
+            </select>
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
