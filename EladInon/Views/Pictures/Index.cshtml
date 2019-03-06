@@ -7,8 +7,11 @@
 <h2>תצוגת תמונות</h2>
 
 <p>
-    <a asp-action="Create">צור תמונה</a> | 
-    <a asp-action="Statistics" >סטטיסטיקה</a> |
+    @if (Context.User.Identity.IsAuthenticated)
+    {
+        <a asp-action="Create">צור תמונה</a>
+    }
+    | <a asp-action="Statistics">סטטיסטיקה</a> |
 </p>
 
 <form asp-action="Index" method="get">
@@ -42,18 +45,20 @@
         </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                <img src="@item.Path" width="200" height="200"/>
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">ערוך</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">פרטים</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">מחק</a>
-            </td>
-        </tr>
-    }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@item.Path" width="200" height="200" />
+                </td>
+                @if (Context.User.Identity.IsAuthenticated)
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">ערוך</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">מחק</a>
+                    </td>
+                }
+            </tr>
+        }
     </tbody>
 </table>

@@ -77,26 +77,6 @@ namespace EladInon.Controllers
             }
         }
 
-        // GET: Albums/Details/5
-        [AllowAnonymous]
-
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var album = await _context.Albums
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (album == null)
-            {
-                return NotFound();
-            }
-
-            return View(album);
-        }
-
         // GET: Albums/Create
         public IActionResult Create()
         {

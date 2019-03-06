@@ -81,25 +81,6 @@ namespace EladInon.Controllers
             }
         }
 
-        // GET: Pictures/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var picture = await _context.Pictures
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (picture == null)
-            {
-                return NotFound();
-            }
-
-            return View(picture);
-        }
-
-
         // GET: Pictures/Create
         public IActionResult Create()
         {

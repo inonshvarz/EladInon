@@ -63,25 +63,6 @@ namespace EladInon.Controllers
             }
         }
 
-        // GET: Locations/Details/5
-        [AllowAnonymous]
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var location = await _context.Locations
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (location == null)
-            {
-                return NotFound();
-            }
-
-            return View(location);
-        }
-
         // GET: Locations/Create
         public IActionResult Create()
         {
