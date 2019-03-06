@@ -13,6 +13,17 @@ namespace EladInon.Data
         {
             context.Database.EnsureCreated();
             if (context.Locations.Any()) return;
+            var packages = new List<Packge>()
+            {
+                new Packge("BatMitzvaBasic","Hour,50 pictures, 10 edited",AlbumType.BatMitzva,700),
+                new Packge("BatMitzvaExtended","2Hours,80 pictures, 20 edited",AlbumType.BatMitzva,1200),
+                new Packge("Family","Hours,50 pictures, 15 edited",AlbumType.Family,850),
+                new Packge("FamilyExtended","2Hours,50 pictures + 10 for each person, 10 + 2 for each person edited",AlbumType.Family,1400),
+                new Packge("Purim","30 min,20 pictures edited",AlbumType.Another,300),
+            };
+            foreach (var packge in packages)
+                context.Packges.Add(packge);
+            context.SaveChanges();
             var user = new User()
             {
                 UserName = "Admin",

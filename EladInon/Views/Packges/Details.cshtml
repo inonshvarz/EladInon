@@ -1,0 +1,56 @@
+﻿@model EladInon.Models.Packge
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Packge</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.AlbumType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AlbumType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd id="PriceInNIS">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+    <span id="PriceInUSD">טוען...</span> $<br />
+    <span id="PriceInEUR">טוען...</span> &euro;<br />
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts {
+    <script>
+        var priceInILS = document.getElementById("PriceInNIS").textContent;
+        $.get("http://data.fixer.io/api/latest?access_key=4b60e61defecf6f61c001a3535abe6dc& symbols=USD,ILS&format=1", (data) => {
+            console.log(data);
+            // Next line is because the value in data.rates.ILS represents the amount of 1 EUR in ILS
+            var priceInEUR = priceInILS / data.rates.ILS;
+            $("#PriceInEUR").text(priceInEUR.toFixed(2));
+            $("#PriceInUSD").text((priceInEUR * data.rates.USD).toFixed(2));
+        });
+    </script>
+}
